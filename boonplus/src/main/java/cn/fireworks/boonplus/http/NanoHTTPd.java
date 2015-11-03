@@ -14,6 +14,9 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Properties;
@@ -678,7 +681,7 @@ public class NanoHTTPd {
                     pw.print("Content-Type: " + mime + "\r\n");
 
                 if (header == null || header.getProperty("Date") == null)
-                    pw.print("Date: " + gmtFrmt.format(new Date()) + "\r\n");
+                    pw.print("Date: " + DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()) + "\r\n");
 
                 if (header != null) {
                     Enumeration e = header.keys();
