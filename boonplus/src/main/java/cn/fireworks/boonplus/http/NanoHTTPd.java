@@ -32,7 +32,7 @@ import java.io.FileOutputStream;
  * <p> NanoHTTPd version 1.22,
  * Copyright &copy; 2001,2005-2011 Jarno Elonen (elonen@iki.fi, http://iki.fi/elonen/)
  * and Copyright &copy; 2010 Konstantinos Togias (info@ktogias.gr, http://ktogias.gr)
- * <p/>
+ * <p/>Response
  * <p><b>Features + limitations: </b><ul>
  * <p/>
  * <li> Only one Java file </li>
