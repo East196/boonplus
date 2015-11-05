@@ -11,22 +11,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.Map.Entry;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-
-import cn.fireworks.boonplus.http.NanoHTTPd.Response;
 
 public class Httpd {
 
@@ -35,7 +32,7 @@ public class Httpd {
 		public String status;
 		public String mimeType;
 		public InputStream data;
-		public Map<Object, Object> headers = new HashMap<>();
+		public Map<String, String> headers = new HashMap<>();
 
 		public Response() {
 			this.status = HTTP_OK;
@@ -67,12 +64,10 @@ public class Httpd {
 
 	public static final String MIME_PLAINTEXT = "text/plain", MIME_HTML = "text/html", MIME_DEFAULT_BINARY = "application/octet-stream", MIME_XML = "text/xml";
 
-	private int port;
 	private final ServerSocket socket;
 	private Thread sessionThread;
 
 	public Httpd(int port) throws IOException {
-		this.port = port;
 		this.socket = new ServerSocket(port);
 		this.sessionThread = new Thread(new Runnable() {
 			public void run() {
@@ -120,18 +115,18 @@ public class Httpd {
 				// Create a BufferedReader for parsing the header.
 				ByteArrayInputStream hbis = new ByteArrayInputStream(buf, 0, rlen);
 				BufferedReader hin = new BufferedReader(new InputStreamReader(hbis));
-				Properties pre = new Properties();
-				Properties parms = new Properties();
-				Properties header = new Properties();
-				Properties files = new Properties();
+				Map<String,String> pre = new HashMap<>();
+				Map<String,String> parms = new HashMap<>();
+				Map<String,String> headers = new HashMap<>();
+				Map<String,String> files = new HashMap<>();
 
 				// Decode the header into parms and header java properties
-				decodeHeader(hin, pre, parms, header);
-				String method = pre.getProperty("method");
-				String uri = pre.getProperty("uri");
+				decodeHeader(hin, pre, parms, headers);
+				String method = pre.get("method");
+				String uri = pre.get("uri");
 
 				long size = 0x7FFFFFFFFFFFFFFFl;
-				String contentLength = header.getProperty("content-length");
+				String contentLength = headers.get("content-length");
 				if (contentLength != null) {
 					try {
 						size = Integer.parseInt(contentLength);
@@ -190,7 +185,7 @@ public class Httpd {
 				// in data section, too, read it:
 				if (method.equalsIgnoreCase("POST")) {
 					String contentType = "";
-					String contentTypeHeader = header.getProperty("content-type");
+					String contentTypeHeader = headers.get("content-type");
 					StringTokenizer st = new StringTokenizer(contentTypeHeader, "; ");
 					if (st.hasMoreTokens()) {
 						contentType = st.nextToken();
@@ -233,7 +228,7 @@ public class Httpd {
 				in.close();
 				is.close();
 				if (method.equalsIgnoreCase("GET")) {
-					if (parms.getProperty("exit") != null) {
+					if (parms.get("exit") != null) {
 						System.exit(0);
 					}
 				}
@@ -251,7 +246,7 @@ public class Httpd {
 		 * Decodes the sent headers and loads the data into java Properties' key
 		 * - value pairs
 		 */
-		private void decodeHeader(BufferedReader in, Properties pre, Properties parms, Properties header) throws InterruptedException {
+		private void decodeHeader(BufferedReader in, Map<String,String> pre, Map<String,String> parms, Map<String,String> header) throws InterruptedException {
 			try {
 				// Read the request line
 				String inLine = in.readLine();
@@ -277,10 +272,6 @@ public class Httpd {
 				} else
 					uri = decodePercent(uri);
 
-				// If there's another token, it's protocol version,
-				// followed by HTTP headers. Ignore version but parse headers.
-				// NOTE: this now forces header names lowercase since they are
-				// case insensitive and vary by client.
 				if (st.hasMoreTokens()) {
 					String line = in.readLine();
 					while (line != null && line.trim().length() > 0) {
@@ -297,11 +288,7 @@ public class Httpd {
 			}
 		}
 
-		/**
-		 * Decodes the Multipart Body data and put it into java Properties' key
-		 * - value pairs.
-		 */
-		private void decodeMultipartData(String boundary, byte[] fbuf, BufferedReader in, Properties parms, Properties files) throws InterruptedException {
+		private void decodeMultipartData(String boundary, byte[] fbuf, BufferedReader in, Map<String,String> parms, Map<String,String> files) throws InterruptedException {
 			try {
 				int[] bpositions = getBoundaryPositions(fbuf, boundary.getBytes());
 				int boundarycount = 1;
@@ -368,13 +355,11 @@ public class Httpd {
 			}
 		}
 
-		/**
-		 * Find the byte positions where multipart boundaries start.
-		 */
 		public int[] getBoundaryPositions(byte[] b, byte[] boundary) {
 			int matchcount = 0;
 			int matchbyte = -1;
-			Vector matchbytes = new Vector();
+			//TODO Vector and Bytes操作
+			Vector matchbytes = new Vector(); 
 			for (int i = 0; i < b.length; i++) {
 				if (b[i] == boundary[matchcount]) {
 					if (matchcount == 0)
@@ -398,10 +383,6 @@ public class Httpd {
 			return ret;
 		}
 
-		/**
-		 * Retrieves the content of a sent file and saves it to a temporary
-		 * file. The full path to the saved file is returned.
-		 */
 		private String saveTmpFile(byte[] b, int offset, int len) {
 			String path = "";
 			if (len > 0) {
@@ -419,10 +400,6 @@ public class Httpd {
 			return path;
 		}
 
-		/**
-		 * It returns the offset separating multipart file headers from the
-		 * file's data.
-		 */
 		private int stripMultipartHeaders(byte[] b, int offset) {
 			int i = 0;
 			for (i = offset; i < b.length; i++) {
@@ -432,10 +409,6 @@ public class Httpd {
 			return i + 1;
 		}
 
-		/**
-		 * Decodes the percent encoding scheme. <br/>
-		 * For example: "an+example%20string" -> "an example string"
-		 */
 		private String decodePercent(String str) throws InterruptedException {
 			try {
 				StringBuffer sb = new StringBuffer();
@@ -461,14 +434,7 @@ public class Httpd {
 			}
 		}
 
-		/**
-		 * Decodes parameters in percent-encoded URI-format ( e.g.
-		 * "name=Jack%20Daniels&pass=Single%20Malt" ) and adds them to given
-		 * Properties. NOTE: this doesn't support multiple identical keys due to
-		 * the simplicity of Properties -- if you need multiples, you might want
-		 * to replace the Properties with a Hashtable of Vectors or such.
-		 */
-		private void decodeParms(String parms, Properties p) throws InterruptedException {
+		private void decodeParms(String parms, Map<String,String> p) throws InterruptedException {
 			if (parms == null)
 				return;
 
@@ -480,19 +446,12 @@ public class Httpd {
 			}
 		}
 
-		/**
-		 * Returns an error message as a HTTP response and throws
-		 * InterruptedException to stop further request processing.
-		 */
 		private void sendError(String status, String msg) throws InterruptedException {
 			sendResponse(status, MIME_PLAINTEXT, null, new ByteArrayInputStream(msg.getBytes()));
 			throw new InterruptedException();
 		}
 
-		/**
-		 * Sends given response to the socket.
-		 */
-		private void sendResponse(String status, String mime, Properties header, InputStream data) {
+		private void sendResponse(String status, String mime, Map<String,String> headers, InputStream data) {
 			try {
 				if (status == null)
 					throw new Error("sendResponse(): Status can't be null.");
@@ -504,15 +463,12 @@ public class Httpd {
 				if (mime != null)
 					pw.print("Content-Type: " + mime + "\r\n");
 
-				if (header == null || header.getProperty("Date") == null)
-					pw.print("Date: " + DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()) + "\r\n");
+				if (headers == null || headers.get("Date") == null)
+					pw.print("Date: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\r\n");
 
-				if (header != null) {
-					Enumeration e = header.keys();
-					while (e.hasMoreElements()) {
-						String key = (String) e.nextElement();
-						String value = header.getProperty(key);
-						pw.print(key + ": " + value + "\r\n");
+				if (headers != null) {
+					for (Entry<String, String> header : headers.entrySet()) {
+						pw.print(header.getKey() + ": " + header.getValue() + "\r\n");
 					}
 				}
 
@@ -544,10 +500,6 @@ public class Httpd {
 		private Socket socket;
 	}
 
-	/**
-	 * URL-encodes everything between "/"-characters. Encodes spaces as '%20'
-	 * instead of '+'.
-	 */
 	private String encodeUri(String uri) {
 		String newUri = "";
 		StringTokenizer st = new StringTokenizer(uri, "/ ", true);
@@ -558,24 +510,17 @@ public class Httpd {
 			else if (tok.equals(" "))
 				newUri += "%20";
 			else {
-				newUri += URLEncoder.encode(tok);
-				// For Java 1.4 you'll want to use this instead:
-				// try { newUri += URLEncoder.encode( tok, "UTF-8" ); } catch (
-				// java.io.UnsupportedEncodingException uee ) {}
+				try {
+					newUri += URLEncoder.encode(tok,"UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return newUri;
 	}
 
-	// ==================================================
-	// File server code
-	// ==================================================
-
-	/**
-	 * Serves file from homeDir and its' subdirectories (only). Uses only URI,
-	 * ignores all headers and HTTP parameters.
-	 */
-	public Response serveFile(String uri, Properties header, File homeDir, boolean allowDirectoryListing) {
+	public Response serveFile(String uri, Map<?, ?> headers, File homeDir, boolean allowDirectoryListing) {
 		// Make sure we won't die of an exception later
 		if (!homeDir.isDirectory())
 			return new Response(HTTP_INTERNALERROR, MIME_PLAINTEXT, "INTERNAL ERRROR: serveFile(): given homeDir is not a directory.");
@@ -661,13 +606,13 @@ public class Httpd {
 			String mime = null;
 			int dot = f.getCanonicalPath().lastIndexOf('.');
 			if (dot >= 0)
-				mime = (String) theMimeTypes.get(f.getCanonicalPath().substring(dot + 1).toLowerCase());
+				mime = (String) mimeTypes.get(f.getCanonicalPath().substring(dot + 1).toLowerCase());
 			if (mime == null)
 				mime = MIME_DEFAULT_BINARY;
 
 			// Support (simple) skipping:
 			long startFrom = 0;
-			String range = header.getProperty("range");
+			String range = (String) headers.get("range");
 			if (range != null) {
 				if (range.startsWith("bytes=")) {
 					range = range.substring("bytes=".length());
@@ -695,7 +640,7 @@ public class Httpd {
 	/**
 	 * Hashtable mapping (String)FILENAME_EXTENSION -> (String)MIME_TYPE
 	 */
-	private static Hashtable theMimeTypes = new Hashtable();
+	private static Map<String,String> mimeTypes = new HashMap<>();
 
 	static {
 		StringTokenizer st = new StringTokenizer("css		text/css " + "js			text/javascript " + "htm		text/html " + "html		text/html "
@@ -704,7 +649,7 @@ public class Httpd {
 				+ "ogg		application/x-ogg " + "zip		application/octet-stream " + "exe		application/octet-stream "
 				+ "class		application/octet-stream ");
 		while (st.hasMoreTokens())
-			theMimeTypes.put(st.nextToken(), st.nextToken());
+			mimeTypes.put(st.nextToken(), st.nextToken());
 	}
 
 	public Response serve(String uri, String method, Map<?, ?> headers, Map<?, ?> parms, Map<?, ?> files) {
