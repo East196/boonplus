@@ -1,10 +1,10 @@
 package cn.fireworks.boonplus.underscore;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 
-import org.boon.Boon;
-import org.boon.primitive.Arry;
+import io.advantageous.boon.core.Conversions;
+import io.advantageous.boon.core.Typ;
+import io.advantageous.boon.primitive.Arry;
 
 /**
  * underscore.java
@@ -13,26 +13,20 @@ import org.boon.primitive.Arry;
  */
 public class _ {
 
-	/**
-	 * do nothing
-	 */
 	public static void noop() {
 
 	}
 
-	/**
-	 * now mills
-	 */
 	public static long now() {
 		return System.currentTimeMillis();
 	}
 
 	public static boolean isEmpty(Object object) {
-		return Boon.isEmpty(object);
+		return Conversions.len(object) == 0;
 	}
 
 	public static boolean isArray(Object object) {
-		return Boon.isArray(object);
+		return Typ.isArray(object);
 	}
 
 	public static <T> T[] toArray(Collection<T> objects) {

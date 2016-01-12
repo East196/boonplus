@@ -4,13 +4,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.boon.Sets;
-import org.boon.core.reflection.BeanUtils;
-import org.boon.core.reflection.Reflection;
-import org.boon.core.reflection.fields.FieldAccess;
+import io.advantageous.boon.core.Sets;
+import io.advantageous.boon.core.reflection.BeanUtils;
+import io.advantageous.boon.core.reflection.Reflection;
+import io.advantageous.boon.core.reflection.fields.FieldAccess;
 
 public class Merger {
-	
+
 	public static <T> T mergeNotNullToFirst(Class<T> destKlass, Object... srcs) {
 		T dest = Reflection.newInstance(destKlass);
 		return mergeNotNullToFirstUnSafe(dest, srcs);

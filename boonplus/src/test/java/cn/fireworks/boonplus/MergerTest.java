@@ -1,20 +1,10 @@
 package cn.fireworks.boonplus;
 
-import cn.fireworks.boonplus.Merger.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.boon.Pair;
-import org.boon.Sets;
-import org.boon.core.reflection.BeanUtils;
-import org.boon.core.reflection.Reflection;
-import org.boon.core.reflection.fields.FieldAccess;
-import org.boon.service.Request;
 public class MergerTest {
 
 	@Test
@@ -31,15 +21,16 @@ public class MergerTest {
 	@Test
 	public void mergeNotNullToFirst_A$Class$ObjectArray() throws Exception {
 		Class<Request> destKlass = Request.class;
-		Request actual = Merger.mergeNotNullToFirst(destKlass, new Request("1", "2", "3", null, null),new Request("0", "1", null, null, "4"));
+		Request actual = Merger.mergeNotNullToFirst(destKlass, new Request("1", "2", "3", null, null),
+				new Request("0", "1", null, null, "4"));
 		Request expected = new Request("0", "1", "3", null, "4");
-		
+
 	}
 
 	@Test
 	public void mergeNotNullToFirst_A$Object$ObjectArray() throws Exception {
 		Request template = new Request(null, null, null, "5", "3");
-		Object[] srcs = new Object[] {new Request("1", "2", "3", "4", "5"),new Request("0", "1", null, null, "4")};
+		Object[] srcs = new Object[] { new Request("1", "2", "3", "4", "5"), new Request("0", "1", null, null, "4") };
 		Request actual = Merger.mergeNotNullToFirst(template, srcs);
 		Request expected = new Request("0", "1", "3", "5", "4");
 		assertThat(actual, is(equalTo(expected)));
@@ -53,6 +44,27 @@ public class MergerTest {
 		Object actual = Merger.mergeToFirst(template, srcs);
 		Object expected = null;
 		assertThat(actual, is(equalTo(expected)));
+	}
+
+	static class Request {
+
+		final String method; // could be GET, POST, or loadUser
+		final Object headers; // could be map or list or object
+		final Object params; // could be map or list or object
+		final Object payload; // Could be JSON payload, XML or Java objects or buffer
+		final String path; // could be URL, URI, or some sort of address
+
+		final long correlationId; // used to match requests with responses.
+
+		public Request(String method, Object headers, Object params, Object payload, String path) {
+			this.method = method;
+			this.params = params;
+			this.headers = headers;
+			this.payload = payload;
+			this.path = path;
+			this.correlationId = -1; // -1 means none
+		}
+
 	}
 
 }

@@ -1,18 +1,17 @@
 package cn.fireworks.boonplus.mapper;
 
-import static org.boon.Boon.sputs;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.boon.Exceptions;
-import org.boon.core.Conversions;
-import org.boon.core.Typ;
-import org.boon.core.TypeType;
-import org.boon.core.reflection.BeanUtils;
-import org.boon.core.reflection.Reflection;
-import org.boon.core.reflection.fields.FieldAccess;
+import io.advantageous.boon.core.Conversions;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Str;
+import io.advantageous.boon.core.Typ;
+import io.advantageous.boon.core.TypeType;
+import io.advantageous.boon.core.reflection.BeanUtils;
+import io.advantageous.boon.core.reflection.Reflection;
+import io.advantageous.boon.core.reflection.fields.FieldAccess;
 
 public class Mapper {
 
@@ -52,7 +51,8 @@ public class Mapper {
 				}
 				copySrcFieldToDestField(src, dst, dstField, srcField, null);
 			} catch (Exception ex) {
-				Exceptions.handle(sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
+				Exceptions.handle(
+						Str.sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
 			}
 		}
 	}
@@ -77,7 +77,8 @@ public class Mapper {
 				copySrcFieldToDestField(src, dst, dstField, srcField, ignore);
 
 			} catch (Exception ex) {
-				Exceptions.handle(sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
+				Exceptions.handle(
+						Str.sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
 			}
 		}
 	}
@@ -98,12 +99,14 @@ public class Mapper {
 				copySrcFieldToDestField(src, dst, dstField, srcField, null);
 
 			} catch (Exception ex) {
-				Exceptions.handle(sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
+				Exceptions.handle(
+						Str.sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex);
 			}
 		}
 	}
 
-	private static void copySrcFieldToDestField(Object src, Object dst, FieldAccess dstField, FieldAccess srcField, Set<String> ignore) {
+	private static void copySrcFieldToDestField(Object src, Object dst, FieldAccess dstField, FieldAccess srcField,
+			Set<String> ignore) {
 		if (srcField.isStatic()) {
 			return;
 		}
@@ -137,20 +140,22 @@ public class Mapper {
 		}
 
 		/* Types match and not a collection so just copy. */
-		if (!(srcValue instanceof Collection) && dstField.type() == srcValue.getClass() || Typ.isSuperType(dstField.type(), srcValue.getClass())) {
+		if ((!(srcValue instanceof Collection) && (dstField.type() == srcValue.getClass()))
+				|| Typ.isSuperType(dstField.type(), srcValue.getClass())) {
 			dstField.setObject(dst, BeanUtils.copy(srcField.getObject(src)));
 			return;
 		}
 
 		/* Collection field copy. */
-		if (srcValue instanceof Collection && dstField.getComponentClass() != null && Typ.isCollection(dstField.type())) {
+		if ((srcValue instanceof Collection) && (dstField.getComponentClass() != null)
+				&& Typ.isCollection(dstField.type())) {
 			handleCollectionFieldCopy(dst, dstField, (Collection<?>) srcValue);
 			return;
 
 		}
 
 		/* Non identical object copy. */
-		if (dstField.typeEnum() == TypeType.ABSTRACT || dstField.typeEnum() == TypeType.INTERFACE) {
+		if ((dstField.typeEnum() == TypeType.ABSTRACT) || (dstField.typeEnum() == TypeType.INTERFACE)) {
 			// no op
 		} else {
 			Object newInstance = Reflection.newInstance(dstField.type());

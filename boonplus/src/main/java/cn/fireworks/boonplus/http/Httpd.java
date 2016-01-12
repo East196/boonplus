@@ -219,11 +219,11 @@ public class Httpd {
 				}
 
 				// Ok, now do the serve()
-				Response r = serve(uri, method, headers, parms, files);
-				if (r == null)
+				Response resp = serve(uri, method, headers, parms, files);
+				if (resp == null)
 					sendError(HTTP_INTERNALERROR, "SERVER INTERNAL ERROR: Serve() returned a null response.");
 				else
-					sendResponse(r.status, r.mimeType, r.headers, r.data);
+					sendResponse(resp.status, resp.mimeType, resp.headers, resp.data);
 
 				in.close();
 				is.close();
@@ -355,6 +355,7 @@ public class Httpd {
 			}
 		}
 
+		//TODO 可视化bytes操作
 		public int[] getBoundaryPositions(byte[] b, byte[] boundary) {
 			int matchcount = 0;
 			int matchbyte = -1;
