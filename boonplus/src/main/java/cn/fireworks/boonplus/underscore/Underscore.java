@@ -9,9 +9,9 @@ import io.advantageous.boon.primitive.Arry;
 /**
  * underscore.java
  * 
- * @author tung
+ * @author east196
  */
-public class _ {
+public class Underscore {
 
 	public static void noop() {
 
