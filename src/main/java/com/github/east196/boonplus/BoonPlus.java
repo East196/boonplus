@@ -107,7 +107,7 @@ public class BoonPlus {
         try {
             Files.copy(from, to);
         } catch (Throwable throwable) {
-            Throwables.throwIfUnchecked(throwable);
+            Throwables.propagate(throwable);
         }
     }
 
@@ -115,7 +115,7 @@ public class BoonPlus {
         try {
             Files.write(ByteStreams.toByteArray(from), to);
         } catch (Throwable throwable) {
-            Throwables.throwIfUnchecked(throwable);
+        	Throwables.propagate(throwable);
         }
     }
 
@@ -123,7 +123,8 @@ public class BoonPlus {
         try {
             return Files.toString(file, Charsets.UTF_8);
         } catch (Throwable throwable) {
-            throw new RuntimeException();
+        	Throwables.propagate(throwable);
+        	return null;
         }
     }
 
