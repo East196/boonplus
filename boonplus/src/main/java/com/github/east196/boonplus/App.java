@@ -1,4 +1,4 @@
-package cn.fireworks.boonplus;
+package com.github.east196.boonplus;
 
 /**
  * Hello world!

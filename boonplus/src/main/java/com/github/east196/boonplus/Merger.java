@@ -1,4 +1,4 @@
-package cn.fireworks.boonplus;
+package com.github.east196.boonplus;
 
 import java.util.Map;
 import java.util.Map.Entry;

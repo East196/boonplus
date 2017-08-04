@@ -1,4 +1,4 @@
-package cn.fireworks.boonplus.mapper;
+package com.github.east196.boonplus.mapper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

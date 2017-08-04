@@ -1,4 +1,4 @@
-package cn.fireworks.boonplus.http;
+package com.github.east196.boonplus.http;
 
 public interface ThreadPool<Job extends Runnable> {
 

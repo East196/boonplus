@@ -1,4 +1,4 @@
-package cn.fireworks.boonplus.underscore;
+package com.github.east196.boonplus.underscore;
 
 import java.util.Collection;
 
