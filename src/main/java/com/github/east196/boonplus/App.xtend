@@ -1,17 +1,17 @@
-package com.github.east196.boonplus;
+package com.github.east196.boonplus
 
-/**
+/** 
  * Hello world!
- *
  */
-public class App {
-	public static void main(String[] args) {
+class App {
+	def static void main(String[] args) { 
+
 		// turnDebugOff();
-		// debug("dddd");
-		// turnDebugOn();
-		// String a = "";
-		// debug(Ints.tryParse(a));
-		// debug();
+//		 debug("dddd");
+//		 turnDebugOn();
+//		 String a = "";
+//		 debug(Ints.tryParse(a));
+//		 debug();
 		// // Integer b=null;
 		// debug("ddddOn");
 		//
