@@ -131,22 +131,11 @@
 	</dependencies>
 
 	<build>
-		<finalName>qbit-hello</finalName>
+		<finalName>boonplus</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>cn.fireworks.spring.App</mainClass>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version><!--$NO-MVN-MAN-VER$ -->
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
