@@ -14,6 +14,8 @@ public class Json {
             .create();
     public static final Gson PRETTY_GSON = new GsonBuilder().registerTypeAdapter(Date.class, new JavaDateGsonAdapter())
             .setPrettyPrinting().create();
+    public static final Gson PRETTY_GSON_WITH_NULL = new GsonBuilder().registerTypeAdapter(Date.class, new JavaDateGsonAdapter())
+            .setPrettyPrinting().serializeNulls().create();
 
     public static String toJson(Object src) {
         return GSON.toJson(src);
@@ -21,6 +23,10 @@ public class Json {
 
     public static String toPrettyJson(Object src) {
         return PRETTY_GSON.toJson(src);
+    }
+    
+    public static String toDebugJson(Object src) {
+        return PRETTY_GSON_WITH_NULL.toJson(src);
     }
 
     public static <T> T fromJson(String json, Class<T> classOfT) {
