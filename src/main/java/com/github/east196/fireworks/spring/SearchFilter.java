@@ -1,6 +1,5 @@
 package com.github.east196.fireworks.spring;
 
-import com.github.east196.boonplus.BoonPlus;
 import com.github.east196.fireworks.Time;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -180,7 +179,7 @@ public class SearchFilter {
             String[] sorts = requestParameterMap.get("order[0][dir]");
             String[] columns = requestParameterMap.get("order[0][column]");
             String[] columNames = requestParameterMap.get("columns[" + columns[0] + "][data]");
-            if (BoonPlus.isEmpty(columNames)) {
+            if (columNames == null || columNames.length == 0) {
                 columNames = requestParameterMap.get("columns[" + columns[0] + "][data][sort]");
             }
             pageRequest = new PageRequest(iDisplayStart / numPerPage, numPerPage,

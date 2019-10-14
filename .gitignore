@@ -31,3 +31,7 @@ build/
 target/
 xtend-gen/
 jnario-gen/
+
+.idea
+*.iml
+*.bak

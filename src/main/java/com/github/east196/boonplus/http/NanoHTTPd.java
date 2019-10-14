@@ -21,7 +21,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import io.advantageous.boon.core.Dates;
+
 
 /**
  * A simple, tiny, nicely embeddable HTTP 1.0 server in Java
@@ -708,7 +708,7 @@ public class NanoHTTPd {
 				}
 
 				if ((header == null) || (header.getProperty("Date") == null)) {
-					pw.print("Date: " + Dates.jsonDate(new Date()) + "\r\n");
+					pw.print("Date: " + new Date() + "\r\n");
 				}
 
 				if (header != null) {
