@@ -182,10 +182,10 @@ public class SearchFilter {
             if (columNames == null || columNames.length == 0) {
                 columNames = requestParameterMap.get("columns[" + columns[0] + "][data][sort]");
             }
-            pageRequest = new PageRequest(iDisplayStart / numPerPage, numPerPage,
+            pageRequest = PageRequest.of(iDisplayStart / numPerPage, numPerPage,
                     sorts[0].equals("asc") ? Direction.ASC : Direction.DESC, columNames[0]);
         } else {
-            pageRequest = new PageRequest(iDisplayStart / numPerPage, numPerPage);
+            pageRequest = PageRequest.of(iDisplayStart / numPerPage, numPerPage);
         }
         return pageRequest;
     }
