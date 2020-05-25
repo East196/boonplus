@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
+<configuration debug="true">
+	<!-- <consolePlugin /> -->
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.quartz" level="WARN" />
+	<logger name="ch.qos.logback" level="WARN" />
+	
+    <logger name="jdbc.connection" level="ERROR"/>
+    <logger name="jdbc.audit" level="ERROR"/>
+    <logger name="jdbc.sqlonly" level="ERROR"/>
+    <logger name="jdbc.resultset" level="ERROR"/>
+    <logger name="log4jdbc.debug" level="ERROR"/>
+    
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+<!-- 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>D:/logs/all-showcms.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ROLLINGFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>D:/logs/showcms.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>D:/logs/showcms.%i.log.zip
+			</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>5</MaxIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>5MB</MaxFileSize>
+		</triggeringPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	特定过滤含有某字符串的日志
+	<appender name="CONTAIN"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator>
+				<expression>message.contains("主播")</expression>
+			</evaluator>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>D:/logs/contains.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+		</encoder>
+	</appender> -->
+
+	<!-- 数据库输出 -->
+<!-- 	<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+		<connectionSource
+			class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+			<driverClass>com.mysql.jdbc.Driver</driverClass>
+			<url>jdbc:mysql://192.168.100.81:3306/test</url>
+			<user>root</user>
+			<password></password>
+		</connectionSource>
+	</appender> -->
+
+      <!-- 异步输出 -->  
+<!--      <appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">  
+            不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志  
+            <discardingThreshold >0</discardingThreshold>  
+            更改默认的队列的深度,该值会影响性能.默认值为256  
+            <queueSize>512</queueSize>  
+            添加附加的appender,最多只能添加一个  
+         <appender-ref ref ="FILE"/>  
+     </appender>  -->
+
+	<root level="DEBUG">
+<!-- 		<appender-ref ref ="DB"/> -->
+		<appender-ref ref="STDOUT" />
+<!-- 		<appender-ref ref="ROLLINGFILE" />
+		<appender-ref ref ="ASYNC"/>
+		<appender-ref ref="CONTAIN" /> -->
+	</root>
+
+</configuration>

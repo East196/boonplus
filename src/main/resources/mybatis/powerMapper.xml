@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.PowerMapper">  
+    
+	<insert id="insertPower" parameterType="Power">
+	  	INSERT INTO `t_power` 
+	  		( `id` , `user_id` , `room_id` , `power_m` , `power_t` , `power_n` , `power_room` )
+	  	VALUES 
+	  		( #{id} , #{userId} , #{roomId} , #{powerM} , #{powerT} , #{powerN} , #{powerRoom} ) ;
+	</insert>
+	
+	<update id="updatePower" parameterType="Power">
+	  	UPDATE `t_power` SET
+			`id` = #{id},
+			`user_id` = #{userId},
+			`room_id` = #{roomId},
+			`power_m` = #{powerM},
+			`power_t` = #{powerT},
+			`power_n` = #{powerN},
+			`power_room` = #{powerRoom}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Power">  
+        SELECT  * FROM `t_power` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Power">  
+        SELECT  * FROM `t_power` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_power` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

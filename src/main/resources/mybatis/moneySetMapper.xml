@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.MoneySetMapper">  
+    
+	<insert id="insertMoneySet" parameterType="MoneySet">
+	  	INSERT INTO `t_money_set` 
+	  		( `id` , `code` , `name` , `order` , `money` , `tip` , `publish_status` , `create_time` )
+	  	VALUES 
+	  		( #{id} , #{code} , #{name} , #{order} , #{money} , #{tip} , #{publishStatus} , #{createTime} ) ;
+	</insert>
+	
+	<update id="updateMoneySet" parameterType="MoneySet">
+	  	UPDATE `t_money_set` SET
+			`id` = #{id},
+			`code` = #{code},
+			`name` = #{name},
+			`order` = #{order},
+			`money` = #{money},
+			`tip` = #{tip},
+			`publish_status` = #{publishStatus},
+			`create_time` = #{createTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="MoneySet">  
+        SELECT  * FROM `t_money_set` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="MoneySet">  
+        SELECT  * FROM `t_money_set` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_money_set` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

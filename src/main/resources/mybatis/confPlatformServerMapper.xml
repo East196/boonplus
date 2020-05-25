@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.ConfPlatformServerMapper">  
+    
+	<insert id="insertConfPlatformServer" parameterType="ConfPlatformServer">
+	  	INSERT INTO `t_conf_platform_server` 
+	  		( `id` , `name` , `description` , `enable` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{description} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateConfPlatformServer" parameterType="ConfPlatformServer">
+	  	UPDATE `t_conf_platform_server` SET
+			`id` = #{id},
+			`name` = #{name},
+			`description` = #{description},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="ConfPlatformServer">  
+        SELECT  * FROM `t_conf_platform_server` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="ConfPlatformServer">  
+        SELECT  * FROM `t_conf_platform_server` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_conf_platform_server` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

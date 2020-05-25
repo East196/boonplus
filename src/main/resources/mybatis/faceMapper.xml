@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.FaceMapper">  
+    
+	<insert id="insertFace" parameterType="Face">
+	  	INSERT INTO `t_face` 
+	  		( `id` , `name` , `code` , `picture` , `magic_picture` , `create_time` , `enable` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{code} , #{picture} , #{magicPicture} , #{createTime} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateFace" parameterType="Face">
+	  	UPDATE `t_face` SET
+			`id` = #{id},
+			`name` = #{name},
+			`code` = #{code},
+			`picture` = #{picture},
+			`magic_picture` = #{magicPicture},
+			`create_time` = #{createTime},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Face">  
+        SELECT  * FROM `t_face` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Face">  
+        SELECT  * FROM `t_face` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_face` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.RoomMapper">  
+    
+	<insert id="insertRoom" parameterType="Room">
+	  	INSERT INTO `t_room` 
+	  		( `id` , `name` , `user_id` , `max_count` , `online_count` , `chatserver_id` , `audioserver_id` , `create_time` , `enable` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{userId} , #{maxCount} , #{onlineCount} , #{chatserverId} , #{audioserverId} , #{createTime} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateRoom" parameterType="Room">
+	  	UPDATE `t_room` SET
+			`id` = #{id},
+			`name` = #{name},
+			`user_id` = #{userId},
+			`max_count` = #{maxCount},
+			`online_count` = #{onlineCount},
+			`chatserver_id` = #{chatserverId},
+			`audioserver_id` = #{audioserverId},
+			`create_time` = #{createTime},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Room">  
+        SELECT  * FROM `t_room` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Room">  
+        SELECT  * FROM `t_room` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_room` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

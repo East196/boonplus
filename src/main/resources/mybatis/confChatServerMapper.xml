@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.ConfChatServerMapper">  
+    
+	<insert id="insertConfChatServer" parameterType="ConfChatServer">
+	  	INSERT INTO `t_conf_chat_server` 
+	  		( `id` , `name` , `max_room` , `ip` , `port` , `access_ip` , `access_port` , `config_file` , `description` , `enable` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{maxRoom} , #{ip} , #{port} , #{accessIp} , #{accessPort} , #{configFile} , #{description} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateConfChatServer" parameterType="ConfChatServer">
+	  	UPDATE `t_conf_chat_server` SET
+			`id` = #{id},
+			`name` = #{name},
+			`max_room` = #{maxRoom},
+			`ip` = #{ip},
+			`port` = #{port},
+			`access_ip` = #{accessIp},
+			`access_port` = #{accessPort},
+			`config_file` = #{configFile},
+			`description` = #{description},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="ConfChatServer">  
+        SELECT  * FROM `t_conf_chat_server` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="ConfChatServer">  
+        SELECT  * FROM `t_conf_chat_server` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_conf_chat_server` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.OperatorMapper">  
+    
+	<insert id="insertOperator" parameterType="Operator">
+	  	INSERT INTO `t_operator` 
+	  		( `id` , `username` , `realname` , `password` , `phone` , `qq` , `email` , `sex` , `picture` , `identity_card` , `include` , `create_time` , `update_time` , `enable` )
+	  	VALUES 
+	  		( #{id} , #{username} , #{realname} , #{password} , #{phone} , #{qq} , #{email} , #{sex} , #{picture} , #{identityCard} , #{include} , #{createTime} , #{updateTime} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateOperator" parameterType="Operator">
+	  	UPDATE `t_operator` SET
+			`id` = #{id},
+			`username` = #{username},
+			`realname` = #{realname},
+			`password` = #{password},
+			`phone` = #{phone},
+			`qq` = #{qq},
+			`email` = #{email},
+			`sex` = #{sex},
+			`picture` = #{picture},
+			`identity_card` = #{identityCard},
+			`include` = #{include},
+			`create_time` = #{createTime},
+			`update_time` = #{updateTime},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Operator">  
+        SELECT  * FROM `t_operator` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Operator">  
+        SELECT  * FROM `t_operator` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_operator` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

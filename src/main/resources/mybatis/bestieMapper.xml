@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.BestieMapper">  
+    
+	<insert id="insertBestie" parameterType="Bestie">
+	  	INSERT INTO `t_bestie` 
+	  		( `id` , `from_user_id` , `to_user_id` , `action_status` , `action_time` )
+	  	VALUES 
+	  		( #{id} , #{fromUserId} , #{toUserId} , #{actionStatus} , #{actionTime} ) ;
+	</insert>
+	
+	<update id="updateBestie" parameterType="Bestie">
+	  	UPDATE `t_bestie` SET
+			`id` = #{id},
+			`from_user_id` = #{fromUserId},
+			`to_user_id` = #{toUserId},
+			`action_status` = #{actionStatus},
+			`action_time` = #{actionTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Bestie">  
+        SELECT  * FROM `t_bestie` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Bestie">  
+        SELECT  * FROM `t_bestie` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_bestie` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>     
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+
+<configuration>  
+	<settings>  
+		<setting name="mapUnderscoreToCamelCase" value="true"/>  
+	</settings>
+
+    <typeAliases>  
+		<typeAlias type="cn.md.show.cms.model.User" alias="User" />
+		<typeAlias type="cn.md.show.cms.model.Power" alias="Power" />
+		<typeAlias type="cn.md.show.cms.model.Room" alias="Room" />
+		<typeAlias type="cn.md.show.cms.model.WonderfulImage" alias="WonderfulImage" />
+		<typeAlias type="cn.md.show.cms.model.WonderfulVideo" alias="WonderfulVideo" />
+		<typeAlias type="cn.md.show.cms.model.VipSet" alias="VipSet" />
+		<typeAlias type="cn.md.show.cms.model.MoneySet" alias="MoneySet" />
+		<typeAlias type="cn.md.show.cms.model.Goods" alias="Goods" />
+		<typeAlias type="cn.md.show.cms.model.Download" alias="Download" />
+		<typeAlias type="cn.md.show.cms.model.Visit" alias="Visit" />
+		<typeAlias type="cn.md.show.cms.model.Fans" alias="Fans" />
+		<typeAlias type="cn.md.show.cms.model.Bestie" alias="Bestie" />
+		<typeAlias type="cn.md.show.cms.model.Keyword" alias="Keyword" />
+		<typeAlias type="cn.md.show.cms.model.ConfChatServer" alias="ConfChatServer" />
+		<typeAlias type="cn.md.show.cms.model.ConfPlatformServer" alias="ConfPlatformServer" />
+		<typeAlias type="cn.md.show.cms.model.Face" alias="Face" />
+		<typeAlias type="cn.md.show.cms.model.Gift" alias="Gift" />
+		<typeAlias type="cn.md.show.cms.model.GiftPack" alias="GiftPack" />
+		<typeAlias type="cn.md.show.cms.model.Operator" alias="Operator" />
+		<typeAlias type="cn.md.show.cms.model.Role" alias="Role" />
+		<typeAlias type="cn.md.show.cms.model.Resource" alias="Resource" />
+    </typeAliases>
+
+    <environments default="development">  
+        <environment id="development">  
+            <transactionManager type="jdbc" />  
+            <dataSource type="POOLED">  
+                <property name="driver" value="com.mysql.jdbc.Driver" />  
+                <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8" />  
+                <property name="username" value="root" />  
+                <property name="password" value="" />  
+            </dataSource>  
+        </environment>  
+    </environments>  
+
+    <mappers>  
+		<mapper resource="mybatis/userMapper.xml" />  
+		<mapper resource="mybatis/powerMapper.xml" />  
+		<mapper resource="mybatis/roomMapper.xml" />  
+		<mapper resource="mybatis/wonderfulImageMapper.xml" />  
+		<mapper resource="mybatis/wonderfulVideoMapper.xml" />  
+		<mapper resource="mybatis/vipSetMapper.xml" />  
+		<mapper resource="mybatis/moneySetMapper.xml" />  
+		<mapper resource="mybatis/goodsMapper.xml" />  
+		<mapper resource="mybatis/downloadMapper.xml" />  
+		<mapper resource="mybatis/visitMapper.xml" />  
+		<mapper resource="mybatis/fansMapper.xml" />  
+		<mapper resource="mybatis/bestieMapper.xml" />  
+		<mapper resource="mybatis/keywordMapper.xml" />  
+		<mapper resource="mybatis/confChatServerMapper.xml" />  
+		<mapper resource="mybatis/confPlatformServerMapper.xml" />  
+		<mapper resource="mybatis/faceMapper.xml" />  
+		<mapper resource="mybatis/giftMapper.xml" />  
+		<mapper resource="mybatis/giftPackMapper.xml" />  
+		<mapper resource="mybatis/operatorMapper.xml" />  
+		<mapper resource="mybatis/roleMapper.xml" />  
+		<mapper resource="mybatis/resourceMapper.xml" />  
+    </mappers>
+
+</configuration>		

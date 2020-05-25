@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.FansMapper">  
+    
+	<insert id="insertFans" parameterType="Fans">
+	  	INSERT INTO `t_fans` 
+	  		( `id` , `from_user_id` , `to_user_id` , `action_time` )
+	  	VALUES 
+	  		( #{id} , #{fromUserId} , #{toUserId} , #{actionTime} ) ;
+	</insert>
+	
+	<update id="updateFans" parameterType="Fans">
+	  	UPDATE `t_fans` SET
+			`id` = #{id},
+			`from_user_id` = #{fromUserId},
+			`to_user_id` = #{toUserId},
+			`action_time` = #{actionTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Fans">  
+        SELECT  * FROM `t_fans` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Fans">  
+        SELECT  * FROM `t_fans` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_fans` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

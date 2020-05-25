@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.DownloadMapper">  
+    
+	<insert id="insertDownload" parameterType="Download">
+	  	INSERT INTO `t_download` 
+	  		( `id` , `channel` , `version` , `client_brand` , `client_type` , `action_time` )
+	  	VALUES 
+	  		( #{id} , #{channel} , #{version} , #{clientBrand} , #{clientType} , #{actionTime} ) ;
+	</insert>
+	
+	<update id="updateDownload" parameterType="Download">
+	  	UPDATE `t_download` SET
+			`id` = #{id},
+			`channel` = #{channel},
+			`version` = #{version},
+			`client_brand` = #{clientBrand},
+			`client_type` = #{clientType},
+			`action_time` = #{actionTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Download">  
+        SELECT  * FROM `t_download` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Download">  
+        SELECT  * FROM `t_download` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_download` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.KeywordMapper">  
+    
+	<insert id="insertKeyword" parameterType="Keyword">
+	  	INSERT INTO `t_keyword` 
+	  		( `keyword` , `description` , `enable` )
+	  	VALUES 
+	  		( #{keyword} , #{description} , #{enable} ) ;
+	</insert>
+	
+	<update id="updateKeyword" parameterType="Keyword">
+	  	UPDATE `t_keyword` SET
+			`keyword` = #{keyword},
+			`description` = #{description},
+			`enable` = #{enable}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="Keyword">  
+        SELECT  * FROM `t_keyword` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="Keyword">  
+        SELECT  * FROM `t_keyword` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_keyword` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

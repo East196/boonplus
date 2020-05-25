@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.WonderfulImageMapper">  
+    
+	<insert id="insertWonderfulImage" parameterType="WonderfulImage">
+	  	INSERT INTO `t_wonderful_image` 
+	  		( `id` , `name` , `url` , `user_id` , `create_time` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{url} , #{userId} , #{createTime} ) ;
+	</insert>
+	
+	<update id="updateWonderfulImage" parameterType="WonderfulImage">
+	  	UPDATE `t_wonderful_image` SET
+			`id` = #{id},
+			`name` = #{name},
+			`url` = #{url},
+			`user_id` = #{userId},
+			`create_time` = #{createTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="WonderfulImage">  
+        SELECT  * FROM `t_wonderful_image` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="WonderfulImage">  
+        SELECT  * FROM `t_wonderful_image` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_wonderful_image` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

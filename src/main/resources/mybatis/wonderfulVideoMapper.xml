@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+<mapper namespace="cn.md.show.cms.data.WonderfulVideoMapper">  
+    
+	<insert id="insertWonderfulVideo" parameterType="WonderfulVideo">
+	  	INSERT INTO `t_wonderful_video` 
+	  		( `id` , `name` , `url` , `user_id` , `preview_picture` , `create_time` )
+	  	VALUES 
+	  		( #{id} , #{name} , #{url} , #{userId} , #{previewPicture} , #{createTime} ) ;
+	</insert>
+	
+	<update id="updateWonderfulVideo" parameterType="WonderfulVideo">
+	  	UPDATE `t_wonderful_video` SET
+			`id` = #{id},
+			`name` = #{name},
+			`url` = #{url},
+			`user_id` = #{userId},
+			`preview_picture` = #{previewPicture},
+			`create_time` = #{createTime}
+	  	WHERE id = #{id} ;
+	</update>
+	
+	<select id="findAll" resultType="WonderfulVideo">  
+        SELECT  * FROM `t_wonderful_video` ;
+    </select>
+    
+	<select id="findById" parameterType="HashMap" resultType="WonderfulVideo">  
+        SELECT  * FROM `t_wonderful_video` WHERE `id` = #{id} ;
+    </select>
+	
+	<delete id="deleteById" parameterType="HashMap" >
+		DELETE FROM `t_wonderful_video` WHERE `id` = #{id} ;
+	</delete>
+    
+</mapper>

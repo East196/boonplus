@@ -36,6 +36,52 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-smartcn</artifactId>
+			<version>4.10.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-demo</artifactId>
+			<version>4.10.3</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-core</artifactId>
+			<version>3.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.33</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.abel533</groupId>
+			<artifactId>ECharts</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.github.east196</groupId>
+			<artifactId>lab-spring</artifactId>
+			<version>0.0.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.vip.vjtools</groupId>
 			<artifactId>vjkit</artifactId>
 			<version>1.0.8</version>
